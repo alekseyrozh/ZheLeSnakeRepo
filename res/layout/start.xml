@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#000000"
+	android:gravity="center_vertical">
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Arcade"
+		android:onClick="onArcadeButtonClick"
+		android:textColor="#FF9006"
+		android:textSize="46sp"
+		android:textStyle="bold"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Company"
+		android:onClick="onCompanyButtonClick"
+		android:textColor="#FF9006"
+		android:textSize="40sp"
+		android:textStyle="bold"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center"/>
+
+
+
+	<ImageButton
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@android:drawable/ic_menu_close_clear_cancel"
+		android:layout_gravity="bottom"
+		android:onClick="onReturnButtonClick"
+		android:textColor="#FF9006"
+		android:textSize="30sp"
+		android:textStyle="bold"/>
+
+</LinearLayout>
+

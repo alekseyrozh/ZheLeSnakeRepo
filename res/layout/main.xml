@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:gravity="center"
+	android:orientation="vertical"
+	android:background="#000000">
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="PLAY"
+		android:layout_width="wrap_content"
+		android:textColor="#FF9006"
+		android:textSize="46sp"
+		android:textStyle="bold"
+		android:onClick="onPlayButtonClick"
+		android:id="@+id/StartButton"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="My Levels"
+		android:onClick="onMyLevelsButtonClick"
+		android:textColor="#FF9006"
+		android:textSize="30sp"
+		android:textStyle="bold"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="EXIT"
+		android:layout_width="wrap_content"
+		android:textColor="#FF9006"
+		android:textSize="42sp"
+		android:textStyle="bold"
+		android:onClick="onExitButtonClick"
+		android:id="@+id/ExtButton"/>
+
+</LinearLayout>
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#524747">
+
+	<RelativeLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/add"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Add New Level"
+			android:onClick="addLevel"
+			android:layout_centerHorizontal="true"/>
+
+		<ImageButton
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:src="@android:drawable/ic_menu_close_clear_cancel"
+			android:layout_alignParentRight="true"
+			android:onClick="toMenu"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:gravity="center">
+
+		<GridView
+			android:id="@+id/gridview"
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:gravity="center"
+			android:horizontalSpacing="20dp"
+			android:numColumns="3"
+			android:paddingLeft="20dp"
+			android:paddingRight="20dp">
+
+		</GridView>
+
+	</LinearLayout>
+
+</LinearLayout>
+

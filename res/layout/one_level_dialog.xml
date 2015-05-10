@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="#524747">
+
+	<ImageView
+		android:id="@+id/imagepart"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="Text"
+		android:layout_width="match_parent"
+		android:id="@+id/textpart"
+		android:gravity="center_horizontal"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:paddingBottom="10dp"/>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:gravity="center">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal">
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text="Rename"
+				android:layout_width="wrap_content"
+				android:id="@+id/RenameButton"
+				android:onClick="oneLevelDialogButtonClick"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text=" Delete  "
+				android:layout_width="wrap_content"
+				android:id="@+id/DeleteButton"
+				android:onClick="oneLevelDialogButtonClick"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal">
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text="Play"
+				android:layout_width="wrap_content"
+				android:id="@+id/PlayButton"
+				android:onClick="oneLevelDialogButtonClick"/>
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text="Edit"
+				android:layout_width="wrap_content"
+				android:id="@+id/EditButton"
+				android:onClick="oneLevelDialogButtonClick"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>
+
