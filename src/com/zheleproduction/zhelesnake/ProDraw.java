@@ -270,12 +270,6 @@ public class ProDraw extends View
 				
 			}
 			prev=cur;
-			
-		//	if(Math.abs(mass[(first-i+mass.length)%mass.length]-mass[(first+1-i+mass.length)%mass.length])==1||Math.abs(mass[(first-i+mass.length)%mass.length]-mass[(first-1-i+mass.length)%mass.length])==kwidth)
-	    //    	snakePath.lineTo(bxToX(mass[(first-i+mass.length)%mass.length])+r/2,bxToY(mass[(first-i+mass.length)%mass.length])+r/2);
-		//	else
-		//		snakePath.moveTo(bxToX(mass[(first-i+mass.length)%mass.length])+r/2,bxToY(mass[(first-i+mass.length)%mass.length])+r/2);
-			
 		}
 	
 	}
@@ -303,8 +297,21 @@ public class ProDraw extends View
 	        circleScore.prepareBitmap();
 			circleTime.prepareBitmap();
 	        
+		/*	
 			Toast.makeText(savedContext,circleTime.num+" "+score,Toast.LENGTH_SHORT).show();
+	    	FileHelper.saveHighscore("me",circleTime.num,circleScore.num);
+			Bundle bun=FileHelper.readHighscores();
 			
+			
+			int[] score=bun.getIntArray("score");
+		    int[] time=bun.getIntArray("time");
+			Toast.makeText(savedContext,"score: "+score[0]+" time: "+time[0],Toast.LENGTH_SHORT).show();
+		*/
+			/*	if(FileHelper.needRewriteHighscores(circleScore.num,circleTime.num))
+				DialogHelper. ebter name dialog
+			FileHelper.addHighscore();*/
+			
+		//	FileHelper.processHighscore();
 			
 			/*
 	    	gameOverCanvas.drawColor(Color.BLACK);
@@ -1584,15 +1591,9 @@ public class ProDraw extends View
         {
             case MotionEvent.ACTION_DOWN:
                 touched = true;
-                if (dir.size()!=1)
-                {
-                    Direction d = dir.get(0);
-                    dir.clear();
-                    dir.add(d);
-                }
-                x=X;
-                y=Y;
-		
+				x=X;
+				y=Y;
+				
 			/*	if(gmover)
 				{
 				/*	if (gameOverScreen.buttonsAreActive)
@@ -1812,6 +1813,15 @@ public class ProDraw extends View
 							}
 					break;
 					case MAIN_GAME:
+
+						if (dir.size()!=1)
+						{
+							Direction d = dir.get(0);
+							dir.clear();
+							dir.add(d);
+						}
+					
+						
 						if(menuButton.isPressed(X,Y))
 						{
 							menuButton.onPress();
@@ -1832,6 +1842,7 @@ public class ProDraw extends View
 				
                 break;
             case MotionEvent.ACTION_MOVE:
+				if(MainActivity.GAME_PHASE==MainActivity.Phase.MAIN_GAME)
                 if ((touched)&&((Math.abs(y-Y)>=delta)||(Math.abs(x-X)>=delta)))
                 {
                     int size = dir.size()-1;

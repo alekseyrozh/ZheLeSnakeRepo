@@ -1,14 +1,18 @@
+
 package com.zheleproduction.zhelesnake.util;
 
 import android.content.*;
 import android.graphics.*;
 import android.os.*;
 import android.widget.*;
+import com.zheleproduction.zhelesnake.*;
 import java.io.*;
 import java.util.*;
 
 public abstract class FileHelper
 {
+	private final static int HIGHSCORES_MAX_COUNT=10;
+	
 	private final static String DATA_FOLDER_NAME="data";
 	private final static String BITMAP_FOLDER_NAME="bitmaps";
 	private final static String HIGHSCORE_FOLDER_NAME="highscore";
@@ -32,7 +36,6 @@ public abstract class FileHelper
 		dataPath=new File(internalPath.getAbsolutePath()+"/"+DATA_FOLDER_NAME);
 		bitmapPath=new File(internalPath.getAbsolutePath()+"/"+BITMAP_FOLDER_NAME);
 		highscorePath=new File(internalPath.getAbsolutePath()+"/"+HIGHSCORE_FOLDER_NAME);
-		
 	}
 	
 	public static void rename(String oldName, String newName)
@@ -47,8 +50,6 @@ public abstract class FileHelper
 			bitmapFile.renameTo(new File(bitmapPath.getAbsolutePath()+"/"+newName));
 		if(highscoreFile.exists())
 			bitmapFile.renameTo(new File(highscorePath.getAbsolutePath()+"/"+newName));
-		
-
 	}
 	
 	public static void deleteLevel(String fileName)
@@ -110,6 +111,81 @@ public abstract class FileHelper
 	public static void addHighscore(String name, int time, int score)
 	{
 		
+	}
+	
+	public static Bundle readHighscores()
+	{
+		Bundle bun=new Bundle();
+		FileInputStream fis=null;
+		ObjectInputStream is=null;
+		Scanner sc=null;
+		try 
+		{
+			fis = new FileInputStream(highscorePath.getAbsolutePath()+"/"+LevelInfo.currentLevelName);
+			is = new ObjectInputStream(fis);
+		    String s=(String) is.readObject();
+
+			sc=new Scanner(s);
+		//	if(sc.nextInt()<HIGHSCORES_MAX_COUNT)
+		    int n=sc.nextInt();
+			bun.putInt("count",n);
+			int[] time= new int[n];
+			int[] score=new int[n];
+			float[] koef=new float[n];
+			
+			for(int i=0;i<n;i++)
+			{
+				time[i]=sc.nextInt();
+				score[i]=sc.nextInt();
+				koef[i]=(float)score[i]/time[i];
+			}
+			
+			
+			bun.putIntArray("time",time);
+			bun.putIntArray("score",score);
+			bun.putFloatArray("koef",koef);
+			
+			Toast.makeText(context,sc.next(),Toast.LENGTH_SHORT).show();
+		/*	bun.putInt("kwidth",sc.nextInt());
+			bun.putInt("kheight",sc.nextInt());
+
+			int[] snake=new int[sc.nextInt()];
+		    for(int i=0;i<snake.length;i++)
+				snake[i]=sc.nextInt();
+			bun.putIntArray("snake",snake);
+
+			int[] blocks=new int[sc.nextInt()];
+		    for(int i=0;i<blocks.length;i++)
+				blocks[i]=sc.nextInt();
+			bun.putIntArray("blocks",blocks);
+
+			bun.putInt("direction",sc.nextInt());*/
+		}
+	    catch(Exception e) 
+		{
+			Toast.makeText(context, "Ocurred error with reading:\n"+e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+		finally
+		{
+			try
+			{
+				if (fis != null)
+					fis.close();
+			}
+			catch (IOException e)
+			{}
+
+			try
+			{
+				if (is != null)
+					is.close();
+			}
+			catch (IOException e)
+			{}
+
+			sc.close();
+		}
+		return bun;
 	}
 	
 	private static int getHighscorePosition(int koef)
@@ -334,7 +410,12 @@ public abstract class FileHelper
 		return bool;
 	}
 */
-	
+	public static boolean needRewriteHighscores()
+	{
+		boolean b=false;
+		
+		return b;
+	}
 	
 	private static void createRootInternalFolder(String folderName)
 	{
@@ -406,17 +487,20 @@ public abstract class FileHelper
 		return true;
 	}
 	
-	private static boolean saveHighscore(String data, String name)
+	public static boolean saveHighscore(String name,int time,int score)
 	{
 		FileOutputStream fos=null;
 		ObjectOutputStream oos=null;
-
+		StringBuilder data=new StringBuilder();
+		data.append(1+" ");
+		data.append(time+" ");
+		data.append(score+" ");
+		data.append(name);
 		try
 		{
-			fos=new FileOutputStream(highscorePath.getAbsolutePath()+"/"+name);
+			fos=new FileOutputStream(highscorePath.getAbsolutePath()+"/"+LevelInfo.currentLevelName);
 			oos=new ObjectOutputStream(fos);
-			oos.writeObject(data);
-
+			oos.writeObject(data.toString());
 
 			fos.flush();
 		}

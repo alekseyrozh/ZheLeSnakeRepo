@@ -9,7 +9,7 @@ public class LevelInfo
 	public static Direction dir;
 	public static boolean needLevelChoice;
 	
-	public static int[] defSnake={2,3};
+	public static int[] defSnake={1,2};
 	public static int[] emptyArr={};
 	
 	public static void setDefault()
