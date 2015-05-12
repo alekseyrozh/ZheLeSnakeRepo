@@ -34,6 +34,7 @@ public class ProDraw extends View
 	float prevAng;
 	boolean timer;
 	boolean win;
+	boolean firststep;
 
 	String gameOverString=new String("GAME OVER");
 	CircleLabel circleTime;
@@ -584,7 +585,7 @@ public class ProDraw extends View
     private void restart()
     {
 		gmover=false;
-
+		firststep=true;
 	/*	if(MainActivity.appMode==MainActivity.AppMode.LOADGAME)
 	       	read();
 	   	else*/
@@ -627,7 +628,8 @@ public class ProDraw extends View
 	/*	if(MainActivity.appMode==MainActivity.AppMode.LOADGAME)
 	       	read();
 	   	else*/
-	    //	createEmptyLevel();
+	    //	createEmptyLevel()
+		    firststep=true;
 			createLevelByIntent();
 			
 		//	Toast.makeText(savedContext,""+length,Toast.LENGTH_SHORT).show();
@@ -749,6 +751,7 @@ public class ProDraw extends View
 		    field[(int)blocks[i]]=false;
 
 		dir.clear();
+		dir.add(LevelInfo.dir);
 		dir.add(LevelInfo.dir);
 	//	dir.add(ProDrawActivity.dir);
 	}
@@ -1486,6 +1489,7 @@ public class ProDraw extends View
            	   	  		if (cfr==fps)
              	  		{
                   	 		nextFrame();
+							firststep=false;
                    		    cfr=0;
 			       		    invalidate();
 						}
@@ -1813,7 +1817,7 @@ public class ProDraw extends View
 							}
 					break;
 					case MAIN_GAME:
-
+						if(!firststep)
 						if (dir.size()!=1)
 						{
 							Direction d = dir.get(0);
