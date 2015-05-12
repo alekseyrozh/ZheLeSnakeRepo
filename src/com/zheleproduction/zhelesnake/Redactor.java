@@ -3222,6 +3222,7 @@ public class Redactor extends View
 									    	if (Bx!=snake.get(1))
 											{
 							                    snredt=false;
+												prevTime=System.currentTimeMillis();
 												move=true;
 											}
 									   	    else
@@ -3235,13 +3236,17 @@ public class Redactor extends View
 					    	else
 							{
 					    	    snredt=false;
+								prevTime=System.currentTimeMillis();
 								move=true;
+								
 							}
 						}
 						else
 						{
 								snredt=lineHead(xp,yp,X,Y,false);
-								move = !snredt;
+								if( !snredt)
+									prevTime=System.currentTimeMillis();
+								move=!snredt;
 						}
                     }
 					else
@@ -3268,6 +3273,7 @@ public class Redactor extends View
 												if(Bx!=snake.get(ksnake-2))
 												{
 									            	snredh=false;
+													prevTime=System.currentTimeMillis();
 													move=true;
 												}
 												else
@@ -3278,6 +3284,7 @@ public class Redactor extends View
 											}
 											else
 											{
+												prevTime=System.currentTimeMillis();
 												move=true;
 												snredh=false;
 											}
@@ -3287,12 +3294,15 @@ public class Redactor extends View
 						    	else
 								{
 							    	snredh=false;
+									prevTime=System.currentTimeMillis();
 									move=true;
 								}
 						   	}
 							else
 							{
 								snredh=lineHead(xp,yp,X,Y,true);
+								if(!snredh)
+									prevTime=System.currentTimeMillis();
 								move=!snredh;
 							}
 						}
@@ -3306,7 +3316,7 @@ public class Redactor extends View
 						    		{
 										if(blocksEdit)
 										{
-								 	 	  lineClear(xp,yp,X,Y);
+								 	 	   lineClear(xp,yp,X,Y);
 						     			}
 									}
 					    			else
@@ -3360,16 +3370,20 @@ public class Redactor extends View
 			    snred=false;
 				snredh=false;
 				snredt=false;
-				move=true;
+			//	move=true;
 				blocksEdit=false;
 			
 				saveButton.unpress();
 				clearButton.unpress();
 			//	blRedNew=false;
+		    	prevTime=System.currentTimeMillis();
+				move=true;
                 break;
 			
         }
 		gd.onTouchEvent(event);
+	
+		
         return true;
     }
 	class MyGestureListener extends GestureDetector.SimpleOnGestureListener
