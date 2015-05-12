@@ -148,6 +148,7 @@ public class Redactor extends View
 	float buttRoundWhite;
 	float buttRoundColor;
 	
+	boolean blocksEdit;
 	boolean bm=false;
     boolean frame=false;
     boolean firstdraw = true;
@@ -844,10 +845,7 @@ public class Redactor extends View
 		resetGraphycs();
 		menuButton.unpress();
 		MainActivity.GAME_PHASE=MainActivity.Phase.REDACTOR;
-		snred=false;
-		snredh=false;
-		snredt=false;
-		move=true;
+	
 		
 		dialogIsClosed=true;
 	}
@@ -872,6 +870,7 @@ public class Redactor extends View
 		k=-1;
 		//ksnake=0;
 		//	arrButDir=1;
+		blocksEdit=false;
 		stageButt=0;
 		blred=false;
 		blredf=false;
@@ -2987,6 +2986,7 @@ public class Redactor extends View
 						}
 						else
 			        	{
+							blocksEdit=true;
 						 	if((x<stx+kwidth*r)&&(x>stx)&&(y>sty)&&(y<sty+kheight*r))
 							{
 								int Dx=(((int)x-stx)/r)+(((int)y-sty)/r)*kwidth;
@@ -3002,12 +3002,14 @@ public class Redactor extends View
 											invalidateBit(areaRect(Dx));
 											invalidate(areaRect(Dx));
 										}
+								//	blocksEdit=true;
 								}	
 								else
 								{
 									newblock(Dx);
 								    xp=X;
 									yp=Y;
+							//		blocksEdit=true;
 								}
 								
 									if(ksnake>0)
@@ -3021,6 +3023,7 @@ public class Redactor extends View
 											move=false;
 											xp=X;
 											yp=Y;
+											blocksEdit=false;
 								    	}
 										else
 										{
@@ -3030,6 +3033,7 @@ public class Redactor extends View
 												move=false;
 												xp=X;
 												yp=Y;
+												blocksEdit=false;
 											}
 										}
 									}
@@ -3218,6 +3222,7 @@ public class Redactor extends View
 									    	if (Bx!=snake.get(1))
 											{
 							                    snredt=false;
+												prevTime=System.currentTimeMillis();
 												move=true;
 											}
 									   	    else
@@ -3231,13 +3236,17 @@ public class Redactor extends View
 					    	else
 							{
 					    	    snredt=false;
+								prevTime=System.currentTimeMillis();
 								move=true;
+								
 							}
 						}
 						else
 						{
-							snredt=lineHead(xp,yp,X,Y,false);
-							move = !snredt;
+								snredt=lineHead(xp,yp,X,Y,false);
+								if( !snredt)
+									prevTime=System.currentTimeMillis();
+								move=!snredt;
 						}
                     }
 					else
@@ -3264,6 +3273,7 @@ public class Redactor extends View
 												if(Bx!=snake.get(ksnake-2))
 												{
 									            	snredh=false;
+													prevTime=System.currentTimeMillis();
 													move=true;
 												}
 												else
@@ -3274,6 +3284,7 @@ public class Redactor extends View
 											}
 											else
 											{
+												prevTime=System.currentTimeMillis();
 												move=true;
 												snredh=false;
 											}
@@ -3283,12 +3294,15 @@ public class Redactor extends View
 						    	else
 								{
 							    	snredh=false;
+									prevTime=System.currentTimeMillis();
 									move=true;
 								}
 						   	}
 							else
 							{
 								snredh=lineHead(xp,yp,X,Y,true);
+								if(!snredh)
+									prevTime=System.currentTimeMillis();
 								move=!snredh;
 							}
 						}
@@ -3300,11 +3314,17 @@ public class Redactor extends View
 								{
 						    		if(cleanMode)
 						    		{
-								 	   lineClear(xp,yp,X,Y);
-						     		}
+										if(blocksEdit)
+										{
+								 	 	   lineClear(xp,yp,X,Y);
+						     			}
+									}
 					    			else
 						    		{
-							    		lineBlock(xp,yp,X,Y);
+										if(blocksEdit)
+										{
+							    			lineBlock(xp,yp,X,Y);
+										}
 						    		}
 								}
 					    	}
@@ -3350,15 +3370,20 @@ public class Redactor extends View
 			    snred=false;
 				snredh=false;
 				snredt=false;
-				move=true;
+			//	move=true;
+				blocksEdit=false;
 			
 				saveButton.unpress();
 				clearButton.unpress();
 			//	blRedNew=false;
+		    	prevTime=System.currentTimeMillis();
+				move=true;
                 break;
 			
         }
 		gd.onTouchEvent(event);
+	
+		
         return true;
     }
 	class MyGestureListener extends GestureDetector.SimpleOnGestureListener
