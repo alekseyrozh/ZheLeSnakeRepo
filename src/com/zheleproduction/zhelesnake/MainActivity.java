@@ -282,11 +282,38 @@ public class MainActivity extends Activity
 	
 	public void addLevel(View view)
 	{
-		GAME_PHASE=Phase.REDACTOR;
+		LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View sDialogLayout=inflater.inflate(R.layout.number_pick_dialog,null);
+
+		final NumberPicker leftNumPick=(NumberPicker)sDialogLayout.findViewById(R.id.leftNumPick);
+		final NumberPicker rightNumPick=(NumberPicker)sDialogLayout.findViewById(R.id.rightNumPick);
+
+		leftNumPick.setMinValue(3);
+		leftNumPick.setMaxValue(25);
+		rightNumPick.setMinValue(3);
+		rightNumPick.setMaxValue(25);
+		
+		DialogHelper pickDialog = new DialogHelper(context)
+		{
+			@Override
+			public void onPositiveButtonClick()
+			{
+				GAME_PHASE=Phase.REDACTOR;
+				Intent intent=new Intent(context,RedactorActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				LevelInfo.setEmpty(leftNumPick.getValue(),rightNumPick.getValue());
+				startActivity(intent);
+			}
+		};
+		
+		pickDialog.showNumberPickDialog(sDialogLayout);
+		
+		
+	/*	GAME_PHASE=Phase.REDACTOR;
 		Intent intent=new Intent(this,RedactorActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		LevelInfo.setEmpty();
-		startActivity(intent);
+		startActivity(intent);*/
 	//	finish();
 	}
 	

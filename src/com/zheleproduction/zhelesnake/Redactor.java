@@ -2213,8 +2213,9 @@ public class Redactor extends View
 			
 			rectBlTest=rectFToRect(buttBl[0].black);
 			rectSnTest=rectFToRect(buttSn[0].black);
-	
 
+		//	pathArrow.reset();
+			pathArrow.rewind();
 			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,-r/2+pdelr+2*pdel);
 			pathArrow.lineTo(r/2-pdelr-2*pdel-roundColor,0);
 			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,r/2-pdelr-2*pdel);
@@ -2422,6 +2423,11 @@ public class Redactor extends View
 			buttSn[i+kStages-1].color.bottom=buttSn[0].color.bottom+(i+1)*(-normWidthColorBl+normWidthBl)/2/kStages;
 			buttSn[i+kStages-1].roundColor=buttSn[i+kStages-1].color.width()/3;
 
+			pathArrow.reset();
+			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,-r/2+pdelr+2*pdel);
+			pathArrow.lineTo(r/2-pdelr-2*pdel-roundColor,0);
+			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,r/2-pdelr-2*pdel);
+			pathArrow.close();
 		}
 
 		//	pointer.decodeSampledBitmapFromResource((int)(r),r);
@@ -2443,7 +2449,7 @@ public class Redactor extends View
 		rectBlTest=rectFToRect(buttBl[0].black);
 		rectSnTest=rectFToRect(buttSn[0].black);
 
-
+		pathArrow.rewind();
 		pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,-r/2+pdelr+2*pdel);
 		pathArrow.lineTo(r/2-pdelr-2*pdel-roundColor,0);
 		pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,r/2-pdelr-2*pdel);
