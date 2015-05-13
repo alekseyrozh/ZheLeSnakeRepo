@@ -455,7 +455,9 @@ public class MainActivity extends Activity
                 @Override
 				public void onGlobalLayout() { 
 					gridview.getViewTreeObserver().removeGlobalOnLayoutListener(this); 
-				 	MyTask loadBitmaps=new MyTask();
+				 	if(adapter!=null)
+						adapter.recycle();
+					MyTask loadBitmaps=new MyTask();
 					loadBitmaps.execute(gridview.getColumnWidth());
 					//gridview.setAdapter(new ImageTextAdapter(getApplicationContext()/*,gridview.getColumnWidth())*/);
 				} 
