@@ -16,7 +16,8 @@
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:orientation="vertical"
-			android:paddingRight="10dp"
+			android:layout_marginRight="10dp"
+			android:id="@+id/leftLay"
 			>
 
 			<TextView
@@ -24,12 +25,13 @@
 				android:text="Width:"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="match_parent"
-				android:gravity="center_horizontal"/>
+				android:gravity="center_horizontal"
+				android:id="@+id/width"	/>
 
 			<NumberPicker
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:layout_margin="10dp"
+				android:padding="10dp"
 				android:id="@+id/leftNumPick"/>
 
 		</LinearLayout>
@@ -38,7 +40,9 @@
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:orientation="vertical"
-			android:paddingLeft="10dp"
+			android:layout_marginLeft="10dp"
+			android:id="@+id/rightLay"
+			
 			>
 
 			<TextView
@@ -46,12 +50,13 @@
 				android:text="Height:"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:layout_width="match_parent"
-				android:gravity="center_horizontal"/>
+				android:gravity="center_horizontal"
+				android:id="@+id/height"	/>
 
 			<NumberPicker
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
-				android:layout_margin="10dp"
+				android:padding="10dp"
 				android:id="@+id/rightNumPick"/>
 
 		</LinearLayout>
