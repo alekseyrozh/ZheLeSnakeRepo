@@ -1,4 +1,3 @@
-
 //package ru.ZheLeProduction.ZheLeSnake;
 package com.zheleproduction.zhelesnake;
 
