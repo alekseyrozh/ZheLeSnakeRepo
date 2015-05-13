@@ -312,6 +312,8 @@ public class MainActivity extends Activity
 					//	ObjectAnimator alphaTextHAnimator=ObjectAnimator.ofFloat(heightText, "alpha", 0);
 					//	leftLay.animate().translationX(leftLay.getWidth()/2f+leftNumPick.getPaddingRight()+leftLay.getPaddingRight());
 						leftLay.animate().translationXBy((rightLay.getX()-leftLay.getX())/2f);
+						rightLay.animate().translationXBy(-(rightLay.getX()-leftLay.getX())/2f);
+					
 						rightNumPick.animate().alpha(0);
 						heightText.animate().alpha(0);
 						widthText.animate().alpha(0);
@@ -329,7 +331,7 @@ public class MainActivity extends Activity
 						heightText.animate().alpha(1);
 						widthText.animate().alpha(1);
 						leftLay.animate().translationX(0);
-						
+						rightLay.animate().translationX(0);
 						/*ObjectAnimator posAnimator=ObjectAnimator.ofFloat(leftLay, "translationX", 0);
 						ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(rightNumPick, "alpha",1 );
 						ObjectAnimator alphaTextWAnimator=ObjectAnimator.ofFloat(widthText, "alpha", 1);
