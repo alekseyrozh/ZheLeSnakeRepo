@@ -31,10 +31,11 @@ public final class R {
         public static final int cellgrid=0x7f030000;
         public static final int level_menu=0x7f030001;
         public static final int main=0x7f030002;
-        public static final int one_level_dialog=0x7f030003;
-        public static final int prodraw_layout=0x7f030004;
-        public static final int save_dialog=0x7f030005;
-        public static final int start=0x7f030006;
+        public static final int number_pick_dialog=0x7f030003;
+        public static final int one_level_dialog=0x7f030004;
+        public static final int prodraw_layout=0x7f030005;
+        public static final int save_dialog=0x7f030006;
+        public static final int start=0x7f030007;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
