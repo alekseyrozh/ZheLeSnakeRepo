@@ -114,6 +114,7 @@ public class Redactor extends View
 	boolean cleanMode;
 	boolean snRedAct;
 	boolean blRedAct;
+	boolean blocksEdit;
 	public static boolean dialogIsClosed ;
 	
 	int out,out1;
@@ -844,10 +845,11 @@ public class Redactor extends View
 		resetGraphycs();
 		menuButton.unpress();
 		MainActivity.GAME_PHASE=MainActivity.Phase.REDACTOR;
-		snred=false;
-		snredh=false;
-		snredt=false;
-		move=true;
+	//	snred=false;
+	//	snredh=false;
+	//	snredt=false;
+	//	move=true;
+		setComponents();
 		
 		dialogIsClosed=true;
 	}
@@ -869,6 +871,7 @@ public class Redactor extends View
         //blocks.clear();
 		//snake.clear();
        // kblocks=0;
+	    blocksEdit=false;
 		k=-1;
 		//ksnake=0;
 		//	arrButDir=1;
@@ -2889,6 +2892,7 @@ public class Redactor extends View
 				switch(MainActivity.GAME_PHASE)
 				{
 				   case REDACTOR:
+				   blocksEdit=false;
 				   if(menuButton.isPressed(x,y))
 				   {
 					   menuButton.onPress();
@@ -2939,6 +2943,7 @@ public class Redactor extends View
 					 //  deltaT=0;
 					   editorMenuScreen.slideIn();
 					   invalidate(menuButton.inv);
+					   
 				   }
 				   else
               	   if(buttBl[0].black.contains(x,y))
@@ -2947,6 +2952,7 @@ public class Redactor extends View
 				      firstBlRed=true;
 				   	  cleanMode=!cleanMode;
 				  	  timer=true;
+					  
 			   	   }
 				   else
 				   {
@@ -2960,6 +2966,7 @@ public class Redactor extends View
 						invalidate(cursor);
 						firstSnRed=true;
 						timer=true;
+						
 					 }
 					 else
 			    	 {
@@ -2970,6 +2977,7 @@ public class Redactor extends View
 							invalidate(clearButton.inv);
 							dialogIsClosed=false;
                             clear();
+							
 							
 						}
 			         	else
@@ -2983,12 +2991,15 @@ public class Redactor extends View
 							saveButton.onPress();
 							invalidate(saveButton.inv);
 							dialogIsClosed=false;
+							
 							save();
+							
 						}
 						else
 			        	{
 						 	if((x<stx+kwidth*r)&&(x>stx)&&(y>sty)&&(y<sty+kheight*r))
 							{
+								blocksEdit=true;
 								int Dx=(((int)x-stx)/r)+(((int)y-sty)/r)*kwidth;
 								blDown=Dx;
 								if(cleanMode)
@@ -3002,6 +3013,7 @@ public class Redactor extends View
 											invalidateBit(areaRect(Dx));
 											invalidate(areaRect(Dx));
 										}
+									
 								}	
 								else
 								{
@@ -3021,6 +3033,7 @@ public class Redactor extends View
 											move=false;
 											xp=X;
 											yp=Y;
+											blocksEdit=false;
 								    	}
 										else
 										{
@@ -3030,6 +3043,7 @@ public class Redactor extends View
 												move=false;
 												xp=X;
 												yp=Y;
+												blocksEdit=false;
 											}
 										}
 									}
@@ -3305,7 +3319,7 @@ public class Redactor extends View
 						{
 							if((X<stx+kwidth*r)&&(X>stx)&&(Y>sty)&&(Y<sty+kheight*r))
 						   	{
-								if (dialogIsClosed)
+								if (dialogIsClosed&&blocksEdit)
 								{
 						    		if(cleanMode)
 						    		{
@@ -3389,6 +3403,9 @@ public class Redactor extends View
 					snredh=false;
 					snredt=false;
 					move=true;
+					
+					blocksEdit=false;
+					
 				//	Toast.makeText(savedContext,"onLong",Toast.LENGTH_SHORT).show();
 					Vibrator v = (Vibrator) savedContext.getSystemService(Context.VIBRATOR_SERVICE);
 					v.vibrate(100);
