@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -9,26 +9,61 @@
 	<LinearLayout
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:id="@+id/pickers">
 
-		<NumberPicker
+		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
-			android:layout_margin="20dp"
-			android:id="@+id/leftNumPick"/>
+			android:orientation="vertical"
+			android:paddingRight="10dp"
+			>
 
-		<NumberPicker
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Width:"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="match_parent"
+				android:gravity="center_horizontal"/>
+
+			<NumberPicker
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_margin="10dp"
+				android:id="@+id/leftNumPick"/>
+
+		</LinearLayout>
+
+		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
-			android:layout_margin="20dp"
-			android:id="@+id/rightNumPick"/>
+			android:orientation="vertical"
+			android:paddingLeft="10dp"
+			>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Height:"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="match_parent"
+				android:gravity="center_horizontal"/>
+
+			<NumberPicker
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_margin="10dp"
+				android:id="@+id/rightNumPick"/>
+
+		</LinearLayout>
 
 	</LinearLayout>
 
 	<CheckBox
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
-		android:text="Square field"/>
+		android:text="Square field"
+		android:id="@+id/box"
+		android:layout_below="@+id/pickers"/>
 
-</LinearLayout>
+</RelativeLayout>
 

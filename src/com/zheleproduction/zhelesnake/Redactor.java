@@ -2265,7 +2265,9 @@ public class Redactor extends View
 
 			clearButton.setBlackRect(width*1/20f,height-tx*3/4,width*7/20f,height-tx/4);
 			saveButton.setBlackRect(width*8/20f,height-tx*3/4,width*14/20f,height-tx/4);
-
+			menuButton.setBlackRect(14f/20*width+3f/20*width-saveButton.black.height()/2, saveButton.black.top,
+										14f/20*width+3f/20*width+saveButton.black.height()/2,saveButton.black.bottom);
+				
 			//черный квадр кнопки
 			buttBl[0].black.left=width/8f;
 			buttBl[0].black.right=buttBl[0].black.left+2/3f*tx;
