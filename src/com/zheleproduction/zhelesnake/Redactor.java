@@ -375,8 +375,10 @@ public class Redactor extends View
 		Bitmap tmpBit=Bitmap.createBitmap(bitmap);
 		Canvas tmpCanvas=new Canvas(tmpBit);
 		pointer.draw(tmpCanvas);
-		Bitmap bit=Bitmap.createBitmap(tmpBit,stx,sty,width-stx*2,height-2*sty);
-		tmpBit.recycle();
+	//	Bitmap bit=Bitmap.createBitmap(tmpBit,stx,sty,width-stx*2,height-2*sty);
+	Bitmap bit=Bitmap.createBitmap(tmpBit,(int)workSpace.left,(int)workSpace.top,(int)workSpace.width(),(int)workSpace.height());
+	
+	tmpBit.recycle();
 		Canvas c=new Canvas(bit);
 		Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);
 		p.setStyle(Paint.Style.STROKE);
@@ -395,7 +397,11 @@ public class Redactor extends View
 	{
 	if(ksnake>0)
 	{
-		if(pointer.notBack())
+		boolean bool=true;
+		if(ksnake>1)
+			if(!pointer.notBack())
+				bool=false;
+		if(bool)
 		{
 		LayoutInflater inflater=(LayoutInflater) savedContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	View saveDialogLayout=inflater.inflate(R.layout.save_dialog,null);

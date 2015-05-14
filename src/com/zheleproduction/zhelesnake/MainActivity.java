@@ -339,6 +339,8 @@ public class MainActivity extends Activity
 		leftNumPick.setMaxValue(25);
 		rightNumPick.setMinValue(3);
 		rightNumPick.setMaxValue(25);
+		leftNumPick.setValue(10);
+		rightNumPick.setValue(10);
 
 		DialogHelper pickDialog = new DialogHelper(context)
 		{
@@ -433,6 +435,8 @@ public class MainActivity extends Activity
 		leftNumPick.setMaxValue(25);
 		rightNumPick.setMinValue(3);
 		rightNumPick.setMaxValue(25);
+		leftNumPick.setValue(10);
+		rightNumPick.setValue(10);
 		
 		DialogHelper pickDialog = new DialogHelper(context)
 		{
