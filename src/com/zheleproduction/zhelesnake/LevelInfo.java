@@ -14,8 +14,8 @@ public class LevelInfo
 	
 	public static void setDefault()
 	{
-		kwidth=2;
-		kheight=2;
+		kwidth=3;
+		kheight=3;
 		arcadeMode=true;
 		snake = defSnake;
 		blocks= emptyArr;
@@ -23,10 +23,30 @@ public class LevelInfo
 		dir=Direction.RIGHT;
 	}
 	
+	public static void setDefault(int w, int h)
+	{
+		kwidth=w;
+		kheight=h;
+		arcadeMode=true;
+		snake = defSnake;
+		blocks= emptyArr;
+
+		dir=Direction.RIGHT;
+	}
+	
+	
 	public static void setEmpty()
 	{
 		kwidth=10;
 		kheight=10;
+		snake = emptyArr;
+		blocks= emptyArr;
+		dir=Direction.RIGHT;
+	}
+	public static void setEmpty(int w, int h)
+	{
+		kwidth=w;
+		kheight=h;
 		snake = emptyArr;
 		blocks= emptyArr;
 		dir=Direction.RIGHT;

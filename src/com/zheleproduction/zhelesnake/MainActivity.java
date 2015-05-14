@@ -12,6 +12,8 @@ import android.view.*;
 import android.view.ViewTreeObserver.*;
 import android.widget.*;
 import com.zheleproduction.zhelesnake.util.*;
+import android.widget.RadioGroup.*;
+import android.animation.*;
 
 
 public class MainActivity extends Activity
@@ -273,20 +275,194 @@ public class MainActivity extends Activity
 //зашли в play
 	public void onArcadeButtonClick(View view)
 	{
+		LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View sDialogLayout=inflater.inflate(R.layout.number_pick_dialog,null);
+
+		final NumberPicker leftNumPick=(NumberPicker)sDialogLayout.findViewById(R.id.leftNumPick);
+		final NumberPicker rightNumPick=(NumberPicker)sDialogLayout.findViewById(R.id.rightNumPick);
+		final CheckBox box=(CheckBox) sDialogLayout.findViewById(R.id.box);
+
+		final TextView widthText=(TextView) sDialogLayout.findViewById(R.id.width);
+		final TextView heightText=(TextView) sDialogLayout.findViewById(R.id.height);
+
+
+		final LinearLayout leftLay=(LinearLayout) sDialogLayout.findViewById(R.id.leftLay);
+		final LinearLayout rightLay=(LinearLayout) sDialogLayout.findViewById(R.id.rightLay);
+		box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+			{
+
+				@Override
+				public void onCheckedChanged(CompoundButton p1, boolean p2)
+				{
+					// TODO: Implement this method
+					if(p2)
+					{
+						//	ObjectAnimator posAnimator=ObjectAnimator.ofFloat(leftLay, "translationX", leftLay.getWidth()/2f+leftNumPick.getPaddingRight()+leftLay.getPaddingRight());
+						//	ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(rightNumPick, "alpha", 0);
+						//	ObjectAnimator alphaTextWAnimator=ObjectAnimator.ofFloat(widthText, "alpha", 0);
+						//	ObjectAnimator alphaTextHAnimator=ObjectAnimator.ofFloat(heightText, "alpha", 0);
+						//	leftLay.animate().translationX(leftLay.getWidth()/2f+leftNumPick.getPaddingRight()+leftLay.getPaddingRight());
+						leftLay.animate().translationXBy((rightLay.getX()-leftLay.getX())/2f);
+						rightLay.animate().translationXBy(-(rightLay.getX()-leftLay.getX())/2f);
+
+						rightNumPick.animate().alpha(0);
+						heightText.animate().alpha(0);
+						widthText.animate().alpha(0);
+						rightNumPick.setEnabled(false);
+
+						//	alphaTextWAnimator.start();
+						//	alphaTextHAnimator.start();
+						//	posAnimator.start();
+						//	alphaAnimator.start();
+					}
+					else
+					{
+						rightNumPick.setEnabled(true);
+						rightNumPick.animate().alpha(1);
+						heightText.animate().alpha(1);
+						widthText.animate().alpha(1);
+						leftLay.animate().translationX(0);
+						rightLay.animate().translationX(0);
+						/*ObjectAnimator posAnimator=ObjectAnimator.ofFloat(leftLay, "translationX", 0);
+						 ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(rightNumPick, "alpha",1 );
+						 ObjectAnimator alphaTextWAnimator=ObjectAnimator.ofFloat(widthText, "alpha", 1);
+						 ObjectAnimator alphaTextHAnimator=ObjectAnimator.ofFloat(heightText, "alpha", 1);
+
+						 alphaTextWAnimator.start();
+						 alphaTextHAnimator.start();
+						 posAnimator.start();
+						 alphaAnimator.start();*/
+					}
+				}
+			});
+		leftNumPick.setMinValue(3);
+		leftNumPick.setMaxValue(25);
+		rightNumPick.setMinValue(3);
+		rightNumPick.setMaxValue(25);
+		leftNumPick.setValue(10);
+		rightNumPick.setValue(10);
+
+		DialogHelper pickDialog = new DialogHelper(context)
+		{
+			@Override
+			public void onPositiveButtonClick()
+			{
+				Intent intent=new Intent(context,ProDrawActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				
+				if(!box.isChecked())
+			    	LevelInfo.setDefault(leftNumPick.getValue(),rightNumPick.getValue());
+				else
+					LevelInfo.setDefault(leftNumPick.getValue(),leftNumPick.getValue());
+
+				startActivity(intent);	
+			}
+		};
+
+		pickDialog.showNumberPickDialog(sDialogLayout);
+		
+	/*	
 		Intent intent=new Intent(this,ProDrawActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		LevelInfo.setDefault();
-		startActivity(intent);
+		startActivity(intent);*/
 //	finish();
 	}
 	
 	public void addLevel(View view)
 	{
-		GAME_PHASE=Phase.REDACTOR;
+		LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View sDialogLayout=inflater.inflate(R.layout.number_pick_dialog,null);
+
+		final NumberPicker leftNumPick=(NumberPicker)sDialogLayout.findViewById(R.id.leftNumPick);
+		final NumberPicker rightNumPick=(NumberPicker)sDialogLayout.findViewById(R.id.rightNumPick);
+		final CheckBox box=(CheckBox) sDialogLayout.findViewById(R.id.box);
+		
+		final TextView widthText=(TextView) sDialogLayout.findViewById(R.id.width);
+		final TextView heightText=(TextView) sDialogLayout.findViewById(R.id.height);
+
+		
+		final LinearLayout leftLay=(LinearLayout) sDialogLayout.findViewById(R.id.leftLay);
+		final LinearLayout rightLay=(LinearLayout) sDialogLayout.findViewById(R.id.rightLay);
+		box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+			{
+
+				@Override
+				public void onCheckedChanged(CompoundButton p1, boolean p2)
+				{
+					// TODO: Implement this method
+					if(p2)
+					{
+					//	ObjectAnimator posAnimator=ObjectAnimator.ofFloat(leftLay, "translationX", leftLay.getWidth()/2f+leftNumPick.getPaddingRight()+leftLay.getPaddingRight());
+					//	ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(rightNumPick, "alpha", 0);
+					//	ObjectAnimator alphaTextWAnimator=ObjectAnimator.ofFloat(widthText, "alpha", 0);
+					//	ObjectAnimator alphaTextHAnimator=ObjectAnimator.ofFloat(heightText, "alpha", 0);
+					//	leftLay.animate().translationX(leftLay.getWidth()/2f+leftNumPick.getPaddingRight()+leftLay.getPaddingRight());
+						leftLay.animate().translationXBy((rightLay.getX()-leftLay.getX())/2f);
+						rightLay.animate().translationXBy(-(rightLay.getX()-leftLay.getX())/2f);
+					
+						rightNumPick.animate().alpha(0);
+						heightText.animate().alpha(0);
+						widthText.animate().alpha(0);
+						rightNumPick.setEnabled(false);
+						
+						//	alphaTextWAnimator.start();
+					//	alphaTextHAnimator.start();
+					//	posAnimator.start();
+					//	alphaAnimator.start();
+					}
+					else
+					{
+						rightNumPick.setEnabled(true);
+						rightNumPick.animate().alpha(1);
+						heightText.animate().alpha(1);
+						widthText.animate().alpha(1);
+						leftLay.animate().translationX(0);
+						rightLay.animate().translationX(0);
+						/*ObjectAnimator posAnimator=ObjectAnimator.ofFloat(leftLay, "translationX", 0);
+						ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(rightNumPick, "alpha",1 );
+						ObjectAnimator alphaTextWAnimator=ObjectAnimator.ofFloat(widthText, "alpha", 1);
+						ObjectAnimator alphaTextHAnimator=ObjectAnimator.ofFloat(heightText, "alpha", 1);
+
+						alphaTextWAnimator.start();
+						alphaTextHAnimator.start();
+						posAnimator.start();
+						alphaAnimator.start();*/
+					}
+				}
+		});
+		leftNumPick.setMinValue(3);
+		leftNumPick.setMaxValue(25);
+		rightNumPick.setMinValue(3);
+		rightNumPick.setMaxValue(25);
+		leftNumPick.setValue(10);
+		rightNumPick.setValue(10);
+		
+		DialogHelper pickDialog = new DialogHelper(context)
+		{
+			@Override
+			public void onPositiveButtonClick()
+			{
+				GAME_PHASE=Phase.REDACTOR;
+				Intent intent=new Intent(context,RedactorActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+				if(!box.isChecked())
+			    	LevelInfo.setEmpty(leftNumPick.getValue(),rightNumPick.getValue());
+				else
+					LevelInfo.setEmpty(leftNumPick.getValue(),leftNumPick.getValue());
+				
+				startActivity(intent);
+			}
+		};
+		
+		pickDialog.showNumberPickDialog(sDialogLayout);
+		
+		
+	/*	GAME_PHASE=Phase.REDACTOR;
 		Intent intent=new Intent(this,RedactorActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		LevelInfo.setEmpty();
-		startActivity(intent);
+		startActivity(intent);*/
 	//	finish();
 	}
 	
@@ -368,7 +544,9 @@ public class MainActivity extends Activity
                 @Override
 				public void onGlobalLayout() { 
 					gridview.getViewTreeObserver().removeGlobalOnLayoutListener(this); 
-				 	MyTask loadBitmaps=new MyTask();
+				 	if(adapter!=null)
+						adapter.recycle();
+					MyTask loadBitmaps=new MyTask();
 					loadBitmaps.execute(gridview.getColumnWidth());
 					//gridview.setAdapter(new ImageTextAdapter(getApplicationContext()/*,gridview.getColumnWidth())*/);
 				} 

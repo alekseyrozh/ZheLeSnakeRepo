@@ -77,6 +77,48 @@ public class DialogHelper
 			});
 		dialog.show();
 	}
+	
+	public void showNumberPickDialog(View v)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(savedContext);
+		builder.setTitle("Size choice");
+		
+		builder.setView(v);
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface p1, int p2)
+				{
+					onNegativeButtonClick();
+				}
+			});
+
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface p1, int p2)
+				{
+				    onPositiveButtonClick();
+				}
+
+
+			});
+
+
+		dialog = builder.create();
+		dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+			{
+				@Override
+				public void onDismiss(DialogInterface p1)
+				{
+					onDialogDismissed();
+				}
+			});
+		Redactor.dialogIsClosed=false;
+		dialog.show();
+	}
+	
 	public void showDialog(String title, String message ,String positiveButton, String negativeButton, boolean cancelable,View /*inflated*/dialogLayout)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(savedContext);

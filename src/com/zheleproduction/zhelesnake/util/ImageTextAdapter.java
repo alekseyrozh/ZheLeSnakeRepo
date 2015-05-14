@@ -17,6 +17,15 @@ public class ImageTextAdapter extends BaseAdapter
     Bitmap[] bitmaps;
 	String[] names;
     Context	mContext;
+	public void recycle()
+	{
+		if(bitmaps!=null)
+		for(Bitmap i:bitmaps)
+		{
+			if(i!=null)
+				i.recycle();
+		}
+	}
 	public ImageTextAdapter(Context context,Bitmap[] b/*, int columnWidth*/)
 	{
 		mContext=context;

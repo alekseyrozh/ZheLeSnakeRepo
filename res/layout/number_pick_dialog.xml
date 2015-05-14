@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:gravity="center"
+	android:padding="30dp">
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal"
+		android:id="@+id/pickers">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginRight="30dp"
+			android:id="@+id/leftLay"
+			>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Width:"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="match_parent"
+				android:gravity="center_horizontal"
+				android:id="@+id/width"	/>
+
+			<NumberPicker
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:padding="10dp"
+				android:id="@+id/leftNumPick"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginLeft="30dp"
+			android:id="@+id/rightLay"
+			
+			>
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="Height:"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:layout_width="match_parent"
+				android:gravity="center_horizontal"
+				android:id="@+id/height"	/>
+
+			<NumberPicker
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:padding="10dp"
+				android:id="@+id/rightNumPick"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<CheckBox
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Square field"
+		android:id="@+id/box"
+		android:layout_below="@+id/pickers"/>
+
+</RelativeLayout>
+

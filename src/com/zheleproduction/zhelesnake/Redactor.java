@@ -1,4 +1,3 @@
-
 //package ru.ZheLeProduction.ZheLeSnake;
 package com.zheleproduction.zhelesnake;
 
@@ -214,6 +213,29 @@ public class Redactor extends View
 			rotating=false;
 		}
 		
+		boolean notBack()
+		{
+			boolean b=true;
+			int x=0;
+			switch(dir)
+			{
+				case RIGHT:
+					x=1;
+				break;
+				case LEFT:
+					x=-1;
+				break;
+				case UP:
+					x=-kwidth;
+				break;
+				case DOWN:
+					x=kwidth;
+			}
+			if(lastSnake+x==snake.get(ksnake-2))
+				b=false;
+			return b;
+		}
+		
 		void loadBitmap(int width,int r)
 		{
 			bitmap= FileHelper.LargeImageHelper.decodeResourseCompressedBitmap(R.drawable.arrow,width,width);
@@ -290,10 +312,12 @@ public class Redactor extends View
 	class MyTask extends AsyncTask<Object,Void,Void>
 	{
 		boolean b;
+		Bitmap bit;
 		@Override
 		protected Void doInBackground(Object[] p1)
 		{
 			b=FileHelper.saveLevel((Bitmap)p1[0],(String)p1[1],(String)p1[2]);
+			bit=(Bitmap)p1[0];
 			return null;
 		}
 
@@ -306,6 +330,7 @@ public class Redactor extends View
 				Toast.makeText(savedContext,"Something went wrong",Toast.LENGTH_SHORT).show();
 			Vibrator v = (Vibrator) savedContext.getSystemService(Context.VIBRATOR_SERVICE);
 			v.vibrate(100);
+			bit.recycle();
 			super.onPostExecute(result);
 		}
 	}
@@ -347,8 +372,13 @@ public class Redactor extends View
 	
 	Bitmap prepareBitmap()
 	{
-		pointer.draw(bitmapCanvas);
-		Bitmap bit=Bitmap.createBitmap(bitmap,stx,sty,width-stx*2,height-2*sty);
+		Bitmap tmpBit=Bitmap.createBitmap(bitmap);
+		Canvas tmpCanvas=new Canvas(tmpBit);
+		pointer.draw(tmpCanvas);
+	//	Bitmap bit=Bitmap.createBitmap(tmpBit,stx,sty,width-stx*2,height-2*sty);
+	Bitmap bit=Bitmap.createBitmap(tmpBit,(int)workSpace.left,(int)workSpace.top,(int)workSpace.width(),(int)workSpace.height());
+	
+	tmpBit.recycle();
 		Canvas c=new Canvas(bit);
 		Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);
 		p.setStyle(Paint.Style.STROKE);
@@ -360,8 +390,6 @@ public class Redactor extends View
 		RectF rec=new RectF(-strWid/2,-strWid/2,bitWid+strWid/2f,bitWid+strWid/2f);
 		p.setColor(Color.rgb(0x52,0x47,0x47));
 		c.drawRoundRect(rec, rad,rad,p);
-		
-		
 		return bit;
 	}
 	
@@ -369,6 +397,12 @@ public class Redactor extends View
 	{
 	if(ksnake>0)
 	{
+		boolean bool=true;
+		if(ksnake>1)
+			if(!pointer.notBack())
+				bool=false;
+		if(bool)
+		{
 		LayoutInflater inflater=(LayoutInflater) savedContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
      	View saveDialogLayout=inflater.inflate(R.layout.save_dialog,null);
 		final EditText saveNameField=(EditText) saveDialogLayout.findViewById(R.id.levelName);
@@ -395,7 +429,8 @@ public class Redactor extends View
 				final String fileName=saveNameField.getText().toString();     
 				if(!fileName.isEmpty())
 				{
-					//preparing data file
+					
+					
 					if(FileHelper.doesNameExist(fileName))
 					{
 						DialogHelper dh=new DialogHelper(savedContext)
@@ -434,7 +469,9 @@ public class Redactor extends View
 							
 						MyTask mt=new MyTask();
 						mt.execute(bit,fileString,fileName);
+					
 					}
+					
 					//	FileHelper.showRootFolder();
 					//	FileHelper.showDataFolder();
 					//	FileHelper.showBitmapFolder();
@@ -460,6 +497,27 @@ public class Redactor extends View
 			}
 		};
 		saveDialog.showDialog("Save Dialog","Choose the name","Save","Cancel",true,saveDialogLayout);
+	}
+		else
+		{
+			DialogHelper dh=new DialogHelper(savedContext)
+			{
+
+				@Override
+				protected void onDialogDismissed()
+				{
+					//	super.onDialogDismissed();
+					dialogIsClosed=true;
+				}
+				@Override
+				protected void onPositiveButtonClick()
+				{
+					// TODO: Implement this method
+				}
+
+			};
+			dh.showOneButtonDialog("Warning!","Change the direction of the snake","Yes, sir!",true);	
+		}
 	}
 		else
 		{
@@ -850,8 +908,9 @@ public class Redactor extends View
 	//	snredt=false;
 	//	move=true;
 		setComponents();
-		
 		dialogIsClosed=true;
+		
+		logMemory("");
 	}
 	
 	public void onStop()
@@ -2214,8 +2273,9 @@ public class Redactor extends View
 			
 			rectBlTest=rectFToRect(buttBl[0].black);
 			rectSnTest=rectFToRect(buttSn[0].black);
-	
 
+		//	pathArrow.reset();
+			pathArrow.rewind();
 			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,-r/2+pdelr+2*pdel);
 			pathArrow.lineTo(r/2-pdelr-2*pdel-roundColor,0);
 			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,r/2-pdelr-2*pdel);
@@ -2265,7 +2325,9 @@ public class Redactor extends View
 
 			clearButton.setBlackRect(width*1/20f,height-tx*3/4,width*7/20f,height-tx/4);
 			saveButton.setBlackRect(width*8/20f,height-tx*3/4,width*14/20f,height-tx/4);
-
+			menuButton.setBlackRect(14f/20*width+3f/20*width-saveButton.black.height()/2, saveButton.black.top,
+										14f/20*width+3f/20*width+saveButton.black.height()/2,saveButton.black.bottom);
+				
 			//черный квадр кнопки
 			buttBl[0].black.left=width/8f;
 			buttBl[0].black.right=buttBl[0].black.left+2/3f*tx;
@@ -2423,6 +2485,11 @@ public class Redactor extends View
 			buttSn[i+kStages-1].color.bottom=buttSn[0].color.bottom+(i+1)*(-normWidthColorBl+normWidthBl)/2/kStages;
 			buttSn[i+kStages-1].roundColor=buttSn[i+kStages-1].color.width()/3;
 
+			pathArrow.reset();
+			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,-r/2+pdelr+2*pdel);
+			pathArrow.lineTo(r/2-pdelr-2*pdel-roundColor,0);
+			pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,r/2-pdelr-2*pdel);
+			pathArrow.close();
 		}
 
 		//	pointer.decodeSampledBitmapFromResource((int)(r),r);
@@ -2444,7 +2511,7 @@ public class Redactor extends View
 		rectBlTest=rectFToRect(buttBl[0].black);
 		rectSnTest=rectFToRect(buttSn[0].black);
 
-
+		pathArrow.rewind();
 		pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,-r/2+pdelr+2*pdel);
 		pathArrow.lineTo(r/2-pdelr-2*pdel-roundColor,0);
 		pathArrow.lineTo(-r/2+pdelr+2*pdel+roundColor,r/2-pdelr-2*pdel);
@@ -2468,7 +2535,7 @@ public class Redactor extends View
 	
 	void logMemory(String s) 
 	{
-		Toast.makeText(savedContext,s+ String.format("Total memory = %s", 
+		Toast.makeText(savedContext,s+ String.format(" memory = %s", 
 													 (int) (Runtime.getRuntime().totalMemory() / 1024)),Toast.LENGTH_SHORT).show();
 	}
 	
@@ -2685,11 +2752,13 @@ public class Redactor extends View
 	{
 		boolean b;
 		Intent intent;
+		Bitmap bit;
 		@Override
 		protected Void doInBackground(Object[] p1)
 		{
 			intent =(Intent)p1[3];
 			b=FileHelper.saveLevel((Bitmap)p1[0],(String)p1[1],(String)p1[2]);
+			bit=(Bitmap)p1[0];
 			return null;
 		}
 
@@ -2709,6 +2778,7 @@ public class Redactor extends View
 		//	MainActivity.GAME_PHASE=MainActivity.Phase.MAIN_GAME;
 			//savedContext.startActivity(new Intent(savedContext,ProDrawActivity.class));
 			savedContext.startActivity(intent);
+			bit.recycle();
 		//	RedactorActivity.activity.finish();
 			
 			
