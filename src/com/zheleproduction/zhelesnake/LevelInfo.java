@@ -23,6 +23,18 @@ public class LevelInfo
 		dir=Direction.RIGHT;
 	}
 	
+	public static void setDefault(int w, int h)
+	{
+		kwidth=w;
+		kheight=h;
+		arcadeMode=true;
+		snake = defSnake;
+		blocks= emptyArr;
+
+		dir=Direction.RIGHT;
+	}
+	
+	
 	public static void setEmpty()
 	{
 		kwidth=10;
