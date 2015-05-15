@@ -2820,6 +2820,12 @@ public class Redactor extends View
 	
 	void showSaveDialogFromMenu()
 	{
+		boolean bool=true;
+		if(ksnake>1)
+			if(!pointer.notBack())
+				bool=false;
+		if(bool)
+		{
 		LayoutInflater inflater=(LayoutInflater) savedContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final View saveDialogLayout=inflater.inflate(R.layout.save_dialog,null);
 		final EditText saveNameField=(EditText) saveDialogLayout.findViewById(R.id.levelName);
@@ -2947,7 +2953,28 @@ public class Redactor extends View
 			}
 		};
 		saveDialog.showDialog("Save Dialog","Choose the name","Save","Cancel",true,saveDialogLayout);
-		
+		}
+		else
+			{
+				DialogHelper dh=new DialogHelper(savedContext)
+				{
+
+					@Override
+					protected void onDialogDismissed()
+					{
+						//	super.onDialogDismissed();
+						dialogIsClosed=true;
+					}
+					@Override
+					protected void onPositiveButtonClick()
+					{
+						// TODO: Implement this method
+					}
+
+				};
+				dh.showOneButtonDialog("Warning!","Change the direction of the snake","Yes, sir!",true);	
+			}
+			
 	}
 
     @Override
@@ -3134,6 +3161,7 @@ public class Redactor extends View
 						if(editorMenuScreen.buttonsAreActive)
 							for (int i=0;i<editorMenuScreen.buttons.length;i++)
 							{
+								final int i1=i;
 								if (editorMenuScreen.buttons[i].isPressed(X,Y) )
 								{
 									editorMenuScreen.buttons[i].onPress();
@@ -3144,6 +3172,12 @@ public class Redactor extends View
 											//	startScreen.needSecondScreen=true;
 											if(ksnake>0)
 											{
+											boolean bool=true;
+													if(ksnake>1)
+														if(!pointer.notBack())
+															bool=false;
+													if(bool)
+													{
 											final DialogHelper dm=new DialogHelper(savedContext)
 											{
 												boolean positiveButtonClicked=false;
@@ -3166,10 +3200,18 @@ public class Redactor extends View
                                                 protected void onNeutralButtonClick()
 												{
 												//	Toast.makeText(savedContext,"neu",Toast.LENGTH_SHORT).show();
+													boolean bool=true;
+													if(ksnake>1)
+														if(!pointer.notBack())
+															bool=false;
+													
 													editorMenuScreen.needSecondScreen=true;
 													editorMenuScreen.slideOut();
 													Intent intent =	createSavingIntent();
 													savedContext.startActivity(intent);
+													
+		
+
 												//	RedactorActivity.activity.finish();
 												}
 
@@ -3185,6 +3227,28 @@ public class Redactor extends View
 											
 											dm.showDialogWithNeutral("Message", "Do you want to save level or play without saving?" ,"Save","Don't save","Cancel",true);
 											}
+											else
+																						
+		{
+			DialogHelper dh=new DialogHelper(savedContext)
+			{
+
+				@Override
+				protected void onDialogDismissed()
+				{
+					//	super.onDialogDismissed();
+					editorMenuScreen.buttons[i1].unpress();
+					dialogIsClosed=true;
+				}
+				@Override
+				protected void onPositiveButtonClick()
+				{
+					// TODO: Implement this method
+				}
+
+			};
+			dh.showOneButtonDialog("Warning!","Change the direction of the snake","Yes, sir!",true);	
+		}}
 											else
 											{
 												DialogHelper dh=new DialogHelper(savedContext)
