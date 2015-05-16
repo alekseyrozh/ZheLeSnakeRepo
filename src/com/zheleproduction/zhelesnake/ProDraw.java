@@ -100,6 +100,7 @@ public class ProDraw extends View
 
 	public void onRestart()
 	{
+	//	FileHelper.showHighscoreFile(LevelInfo.currentLevelName);
 	//	Toast.makeText(savedContext,"restarted",Toast.LENGTH_SHORT).show();
 		kwidth=LevelInfo.kwidth;
 		kheight=LevelInfo.kheight;
@@ -436,6 +437,9 @@ public class ProDraw extends View
 		gameOverScreen.startCanvas.drawPath(snakePath,pathP);
 		menuButton.draw(gameOverScreen.startCanvas);
 		gameOverScreen.slideIn();
+		String playerName="my name";
+		String levelName=LevelInfo.currentLevelName;
+	//	FileHelper.processHighscores(playerName,levelName,circleScore.num,circleTime.num);
 	}
 		
     private void newFood()
@@ -459,7 +463,7 @@ public class ProDraw extends View
         foody = p/kwidth;
         foodx = p%kwidth;
 	  
-    }
+	}
 
 	void drawPictureOnCanvas(Canvas c)
 	{
@@ -789,6 +793,8 @@ public class ProDraw extends View
 		
 //		gestureDetector=new GestureDetector(savedContext, new MyGestureListener());
 		FileHelper.prepareAll(context);
+		//FileHelper.showHighscoreFile(LevelInfo.currentLevelName);
+		
 		
 		savedContext=context;
 	//	restartButtonPressed=false;

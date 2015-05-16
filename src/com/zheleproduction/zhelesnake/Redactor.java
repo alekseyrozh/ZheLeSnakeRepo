@@ -2535,8 +2535,8 @@ public class Redactor extends View
 	
 	void logMemory(String s) 
 	{
-		Toast.makeText(savedContext,s+ String.format(" memory = %s", 
-													 (int) (Runtime.getRuntime().totalMemory() / 1024)),Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(savedContext,s+ String.format(" memory = %s", 
+			//										 (int) (Runtime.getRuntime().totalMemory() / 1024)),Toast.LENGTH_SHORT).show();
 	}
 	
 	

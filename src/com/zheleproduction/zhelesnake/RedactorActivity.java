@@ -86,7 +86,7 @@ public class RedactorActivity extends Activity
 
 		 dir=Direction.intToDirection(intent.getIntExtra("direction",2));
 		 */
-			Toast.makeText(this,"restarted",Toast.LENGTH_SHORT).show();
+		//	Toast.makeText(this,"restarted",Toast.LENGTH_SHORT).show();
 		
 
 		red.onRestart();
